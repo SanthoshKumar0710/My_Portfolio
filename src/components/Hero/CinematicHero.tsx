@@ -1,16 +1,13 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { Sparkles, Download, ArrowDown, Cpu, Network, ShieldCheck } from "lucide-react";
+import { Sparkles, Download, Cpu, Network } from "lucide-react";
 import { PORTFOLIO_DATA } from "@/data/portfolio";
 import { getAssetPath } from "@/utils/assetPath";
 
 export const CinematicHero: React.FC = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [videoError, setVideoError] = useState(false);
 
   // Smooth scroll handler
   const scrollTo = (id: string) => {
@@ -129,53 +126,13 @@ export const CinematicHero: React.FC = () => {
       id="hero"
       className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden bg-[#03050B] text-[#F5F7FF] select-none"
     >
-      {/* Background Video Layer */}
+      {/* Background Neural Canvas & Spatial Atmosphere Layer */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         {/* Deep Spatial Foundation */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#03050B] via-[#070D1E] to-[#03050B]" />
 
-        {/* Live Foreground Video - Framed precisely to active 9:16 stream with zero black bars */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none flex items-center justify-center">
-          <div
-            className="relative flex items-center justify-center overflow-hidden"
-            style={{
-              height: "min(90vh, 880px)",
-              width: "calc(min(90vh, 880px) * (608 / 1080))",
-              maxWidth: "96vw",
-              maskImage: "radial-gradient(ellipse 95% 94% at 50% 50%, black 78%, rgba(0,0,0,0.85) 88%, transparent 100%)",
-              WebkitMaskImage: "radial-gradient(ellipse 95% 94% at 50% 50%, black 78%, rgba(0,0,0,0.85) 88%, transparent 100%)",
-            }}
-          >
-            <video
-              ref={videoRef}
-              src={getAssetPath(PORTFOLIO_DATA.hero.videoSrc)}
-              autoPlay
-              muted
-              loop
-              playsInline
-              onLoadedData={() => setVideoLoaded(true)}
-              onError={() => setVideoError(true)}
-              className={`max-w-none transition-opacity duration-1000 ${
-                videoLoaded && !videoError ? "opacity-60" : "opacity-0"
-              }`}
-              style={{
-                height: "100%",
-                width: "315.789%",
-                maxWidth: "none",
-                objectFit: "fill",
-                position: "absolute",
-                left: "50%",
-                transform: "translateX(-50%)",
-                filter: "brightness(0.96) contrast(1.08) saturate(1.15)",
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Fallback ambient gradient if video is loading or unsupported */}
-        {(!videoLoaded || videoError) && (
-          <div className="absolute inset-0 bg-gradient-to-b from-[#080D18] via-[#03050B] to-[#03050B]" />
-        )}
+        {/* Ambient Spatial Atmosphere */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#080D18]/90 via-[#03050B]/70 to-[#03050B]" />
 
         {/* 3D Neural Particle Canvas Overlay */}
         <canvas
