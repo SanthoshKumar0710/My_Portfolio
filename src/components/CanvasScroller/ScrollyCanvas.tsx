@@ -461,13 +461,13 @@ export const ScrollyCanvas: React.FC<ScrollyCanvasProps> = ({
           <div className="absolute top-6 left-6 z-20 pointer-events-none hidden md:flex items-center gap-2 font-mono text-[10px] text-neutral-400">
             <div className="h-2 w-2 border-l border-t border-[#00D9FF]" />
             <span className="text-[#00D9FF]">3D CAMERA</span>
-            <span className="text-neutral-600">//</span>
+            <span className="text-neutral-600">{"//"}</span>
             <span>16:9 WIDESCREEN FOV</span>
           </div>
 
           <div className="absolute top-6 right-6 z-20 pointer-events-none hidden md:flex items-center gap-2 font-mono text-[10px] text-neutral-400">
             <span>SPATIAL MATRIX</span>
-            <span className="text-neutral-600">//</span>
+            <span className="text-neutral-600">{"//"}</span>
             <span className="text-[#7657FF]">1920×1080</span>
             <div className="h-2 w-2 border-r border-t border-[#7657FF]" />
           </div>
@@ -475,7 +475,7 @@ export const ScrollyCanvas: React.FC<ScrollyCanvasProps> = ({
           <div className="absolute bottom-6 left-6 z-20 pointer-events-none hidden md:flex items-center gap-2 font-mono text-[10px] text-neutral-400">
             <div className="h-2 w-2 border-l border-b border-[#00D9FF]" />
             <span className="text-[#00D9FF]">60 FPS ENGINE</span>
-            <span className="text-neutral-600">//</span>
+            <span className="text-neutral-600">{"//"}</span>
             <span>HARDWARE SYNCED</span>
           </div>
 
