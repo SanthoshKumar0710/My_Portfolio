@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Cpu, Brain, Terminal, Menu, X, Download, Sparkles } from "lucide-react";
 import { SoundButton } from "@/components/UI/SoundManager";
 import { PORTFOLIO_DATA } from "@/data/portfolio";
+import { getAssetPath } from "@/utils/assetPath";
 import { usePortfolioMode, PortfolioMode } from "@/context/ModeContext";
 
 export const Navbar: React.FC = () => {
@@ -135,7 +136,7 @@ export const Navbar: React.FC = () => {
           <SoundButton />
 
           <a
-            href={PORTFOLIO_DATA.hero.resumeUrl}
+            href={getAssetPath(PORTFOLIO_DATA.hero.resumeUrl)}
             download="Santhosh_Kumar_Resume.pdf"
             className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#00D9FF] to-[#7657FF] px-4 py-1.5 text-xs font-mono font-semibold uppercase tracking-wider text-white shadow-[0_0_15px_rgba(0,217,255,0.3)] transition-all hover:scale-105 active:scale-95"
           >
@@ -198,7 +199,7 @@ export const Navbar: React.FC = () => {
             </div>
 
             <a
-              href={PORTFOLIO_DATA.hero.resumeUrl}
+              href={getAssetPath(PORTFOLIO_DATA.hero.resumeUrl)}
               download="Santhosh_Kumar_Resume.pdf"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#00D9FF] to-[#7657FF] py-3 text-xs font-mono font-bold uppercase tracking-wider text-white"
             >

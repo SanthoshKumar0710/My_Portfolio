@@ -4,6 +4,7 @@ import React, { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Eye, Cpu, Scan, ShieldCheck, Crosshair, Sparkles } from "lucide-react";
 import { PORTFOLIO_DATA } from "@/data/portfolio";
+import { getAssetPath } from "@/utils/assetPath";
 
 export const VisionPerceptionSlider: React.FC = () => {
   const [sliderPos, setSliderPos] = useState(50); // percentage 0 to 100
@@ -73,7 +74,7 @@ export const VisionPerceptionSlider: React.FC = () => {
           {/* Layer 1: Neural Perception & Tracking Layer (Full Width background) */}
           <div className="absolute inset-0">
             <img
-              src="/images/nayan-ximage.jpeg"
+              src={getAssetPath("/images/nayan-ximage.jpeg")}
               alt="NAYAN-X 3D Fused Sensor Perception"
               className="h-full w-full object-cover"
             />
@@ -109,7 +110,7 @@ export const VisionPerceptionSlider: React.FC = () => {
             style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
           >
             <img
-              src="/images/rawinput.jpeg"
+              src={getAssetPath("/images/rawinput.jpeg")}
               alt="Raw Camera Input"
               className="h-full w-full object-cover"
             />

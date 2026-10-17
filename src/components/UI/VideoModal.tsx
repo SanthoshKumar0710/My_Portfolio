@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Film, Sparkles, Volume2, ShieldCheck, Tag } from "lucide-react";
 import { Project } from "@/data/portfolio";
+import { getAssetPath } from "@/utils/assetPath";
 
 interface VideoModalProps {
   project: Project;
@@ -63,7 +64,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({ project, onClose }) => {
           <div className="relative aspect-video w-full bg-black flex items-center justify-center overflow-hidden">
             {project.videoUrl ? (
               <video
-                src={project.videoUrl}
+                src={getAssetPath(project.videoUrl)}
                 controls
                 autoPlay
                 playsInline

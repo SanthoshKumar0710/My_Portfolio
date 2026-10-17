@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Sparkles, GraduationCap, Code2, Brain, MapPin, Compass } from "lucide-react";
 import { PORTFOLIO_DATA } from "@/data/portfolio";
+import { getAssetPath } from "@/utils/assetPath";
 
 export const AboutMe: React.FC = () => {
   return (
@@ -51,7 +52,7 @@ export const AboutMe: React.FC = () => {
                 <div className="relative aspect-[4/5] w-full rounded-2xl overflow-hidden bg-[#03050B]">
                   {/* Real authentic portrait image of Santhosh Kumar */}
                   <img
-                    src={PORTFOLIO_DATA.hero.portraitUrl}
+                    src={getAssetPath(PORTFOLIO_DATA.hero.portraitUrl)}
                     alt="Santhosh Kumar — AI/ML Engineer"
                     className="h-full w-full object-cover object-top filter contrast-[1.05] brightness-95 transition-transform duration-700 group-hover:scale-105"
                   />

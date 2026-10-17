@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState, useCallback, createContext, useContext } from "react";
 import { useScroll, useMotionValueEvent, useSpring, MotionValue } from "framer-motion";
 import { Layers, Sparkles, Maximize2 } from "lucide-react";
+import { getAssetPath } from "@/utils/assetPath";
 
 interface ScrollyContextType {
   scrollYProgress: MotionValue<number>;
@@ -258,60 +259,65 @@ export const ScrollyCanvas: React.FC<ScrollyCanvasProps> = ({
     renderFrame(currentFrameRef.current);
   }, [renderFrame]);
 
-  // Preload frames progressively
+  // Preload frames progressively with resilient fallback
   useEffect(() => {
     imagesRef.current = new Array(totalFrames).fill(null);
     let loadedCounter = 0;
 
     const getWebpPath = (index: number) => {
       const padded = String(index + 1).padStart(3, "0");
-      return `/sequence/frame_${padded}.webp`;
+      return getAssetPath(`/sequence/frame_${padded}.webp`);
     };
 
     const getJpgPath = (index: number) => {
       const padded = String(index + 1).padStart(3, "0");
-      return `/sequence/frame_${padded}.jpg`;
+      return getAssetPath(`/sequence/frame_${padded}.jpg`);
     };
 
-    // Priority load: frame 0 first for instant visual paint
-    const firstImg = new Image();
-    firstImg.src = getWebpPath(0);
-    firstImg.onload = () => {
-      imagesRef.current[0] = firstImg;
-      loadedCounter++;
-      setIsFirstFrameLoaded(true);
-      handleResize();
-      renderFrame(0);
-      onLoadingProgress?.(loadedCounter, totalFrames);
+    const loadSingleFrame = (index: number) => {
+      const img = new Image();
+      img.src = getWebpPath(index);
+      img.onload = () => {
+        imagesRef.current[index] = img;
+        loadedCounter++;
+        onLoadingProgress?.(loadedCounter, totalFrames);
 
-      // Progressive background loading
-      for (let i = 1; i < totalFrames; i++) {
-        const img = new Image();
-        img.src = getWebpPath(i);
-        img.onload = () => {
-          imagesRef.current[i] = img;
+        if (index === 0) {
+          setIsFirstFrameLoaded(true);
+          handleResize();
+          renderFrame(0);
+        }
+        if (currentFrameRef.current === index) {
+          renderFrame(index);
+        }
+      };
+      img.onerror = () => {
+        const fallback = new Image();
+        fallback.src = getJpgPath(index);
+        fallback.onload = () => {
+          imagesRef.current[index] = fallback;
           loadedCounter++;
           onLoadingProgress?.(loadedCounter, totalFrames);
 
-          if (currentFrameRef.current === i) {
-            renderFrame(i);
+          if (index === 0) {
+            setIsFirstFrameLoaded(true);
+            handleResize();
+            renderFrame(0);
+          }
+          if (currentFrameRef.current === index) {
+            renderFrame(index);
           }
         };
-        img.onerror = () => {
-          const fallback = new Image();
-          fallback.src = getJpgPath(i);
-          fallback.onload = () => {
-            imagesRef.current[i] = fallback;
-            loadedCounter++;
-            onLoadingProgress?.(loadedCounter, totalFrames);
-          };
-        };
-      }
+      };
     };
 
-    firstImg.onerror = () => {
-      firstImg.src = getJpgPath(0);
-    };
+    // 1. Immediately request priority frame 0
+    loadSingleFrame(0);
+
+    // 2. Concurrently load all other frames progressively
+    for (let i = 1; i < totalFrames; i++) {
+      loadSingleFrame(i);
+    }
 
     window.addEventListener("resize", handleResize);
     handleResize();
@@ -411,7 +417,7 @@ export const ScrollyCanvas: React.FC<ScrollyCanvasProps> = ({
             >
               <video
                 ref={videoRef}
-                src="/video.mp4"
+                src={getAssetPath("/video.mp4")}
                 autoPlay
                 loop
                 muted

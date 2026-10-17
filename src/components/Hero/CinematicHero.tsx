@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Sparkles, Download, ArrowDown, Cpu, Network, ShieldCheck } from "lucide-react";
 import { PORTFOLIO_DATA } from "@/data/portfolio";
+import { getAssetPath } from "@/utils/assetPath";
 
 export const CinematicHero: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -147,7 +148,7 @@ export const CinematicHero: React.FC = () => {
           >
             <video
               ref={videoRef}
-              src={PORTFOLIO_DATA.hero.videoSrc}
+              src={getAssetPath(PORTFOLIO_DATA.hero.videoSrc)}
               autoPlay
               muted
               loop
@@ -299,7 +300,7 @@ export const CinematicHero: React.FC = () => {
           </button>
 
           <a
-            href={PORTFOLIO_DATA.hero.resumeUrl}
+            href={getAssetPath(PORTFOLIO_DATA.hero.resumeUrl)}
             download="Santhosh_Kumar_Resume.pdf"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-3 rounded-full border border-[#00D9FF]/30 bg-[#0B1220]/80 px-8 py-4 font-mono text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#00D9FF] shadow-[0_0_25px_rgba(0,217,255,0.15)] backdrop-blur-md transition-all duration-300 hover:border-[#00D9FF] hover:bg-[#00D9FF]/15 hover:text-white hover:scale-105 active:scale-95"
           >
